@@ -1,0 +1,26 @@
+// count the frequency of second largest element
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1,2,3,4,4,4,5,5,5};
+        int count = 0;
+        int index = arr.length-1;
+        //skip the largest or the last element
+        while(index >= 0 && arr[index] == arr[arr.length-1]) index--;
+        
+        //index will be initialized with the second largest position
+        
+        if(index < 0){
+            System.out.println(0);
+            return;
+        }else{
+            int second_largest = arr[index];
+            //find the occurance of second largest element
+            while(arr[index] == second_largest){
+                count++;
+                index--;
+            }
+        }
+        
+        System.out.println(count);
+    }
+}

@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class Main {
+    public static int getVersion(String[] str) {
+        int maxVersion = 0; // Correct the variable name here
+        if (str.length == 0) return -1;
+        for (int i = 0; i < str.length; i++) {
+            String s = str[i];
+            boolean valid = true;
+            if (s.length() >= 6 && s.substring(0, 5).equals("File_")) { // Use substring and equals for string comparison
+                int index = 5, version = 0;
+                while (index < s.length()) {
+                    if (s.charAt(index) >= '48' && s.charAt(index) <= '57') { // Use character literals for comparison
+                        version = (version * 10) + (s.charAt(index) - '48');
+                    } else {
+                        valid = false;
+                        break;
+                    }
+                    index++;
+                }
+                maxVersion = Math.max(maxVersion, version); // Update variable name here
+            }
+        }
+        return maxVersion;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] str = new String[5];
+        for (int i = 0; i < 5; i++) {
+            str[i] = sc.nextLine();
+        }
+        System.out.println(getVersion(str));
+        sc.close(); // Close the scanner
+    }
+}

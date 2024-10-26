@@ -1,0 +1,23 @@
+// Music and song problem
+public class Main {
+    public static void main(String[] args) {
+        String str = "aabaa";
+        int maximum = 0,count = 0;
+        int i = 0, j = -1, k = 3;
+        //calculate the first window
+        while(j < k-1){
+            if(str.charAt(++j) == 'a'){
+                count++;
+            }
+        }
+        maximum = count;
+        
+        while(j < str.length()-1){
+            if(str.charAt(i++) == 'a') count--; 
+            if(str.charAt(++j) == 'a') count++;
+            maximum = Math.max(count,maximum);
+        }
+        
+        System.out.println(maximum);
+    }
+}
