@@ -1,5 +1,19 @@
 package Cheatsheet;
 
+//  Write a function CheckPassword(str) which will accept the string as an 
+// argument or parameter and validates the password. It will return 1 if the 
+// conditions are satisfied else itʼll return 0?
+//  The password is valid if it satisfies the below conditions:
+//  a. It should contain at least 4 characters.
+//  b. At least 1 numeric digit should be present.
+//  c. At least 1 Capital letter should be there.
+//  d. Passwords should not contain space or slash(/).
+//  e. The starting character should not be a number.
+//  Sample Test Case:
+//  Input:
+//  bB1_89
+//  Output:
+//  1
 public class PasswordChecker {
     public static int checkNumeric(String password){
         int numeric_digit = 0;
