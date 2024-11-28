@@ -1,0 +1,31 @@
+//https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1
+
+class Solution {
+   
+    public int perfectSum(int[] nums, int target) {
+         int[][] t = new int[nums.length + 1][target + 1];
+
+    
+    for (int i = 0; i <= nums.length; i++) {
+        t[i][0] = 1; // Only one way to achieve a sum of 0: use no elements
+    }
+    for (int j = 1; j <= target; j++) {
+        t[0][j] = 0; // No way to achieve a positive sum with no elements
+    }
+
+    
+    for (int i = 1; i <= nums.length; i++) {
+        for (int j = 0; j <= target; j++) {
+            if (nums[i - 1] <= j) {
+                // Include the current element or exclude it
+                t[i][j] = t[i - 1][j - nums[i - 1]] + t[i - 1][j];
+            } else {
+                // Exclude the current element
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+
+    return t[nums.length][target];
+    }
+}
