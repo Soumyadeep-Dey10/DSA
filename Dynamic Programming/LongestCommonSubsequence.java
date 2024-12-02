@@ -3,7 +3,7 @@ import  java.util.Arrays;
 public class LongestCommonSubsequence {
     private int[][] t;
 
-    //recursion without dp
+    
     public int longestCommonSubsequence(String text1, String text2) {
         int m = text1.length();
         int n = text2.length();
@@ -15,6 +15,7 @@ public class LongestCommonSubsequence {
 
         return helper(text1, text2, m, n);
     }
+    //recursion without dp
     // public int helper(String text1, String text2, int m, int n){
     //     if(n == 0 || m == 0) return 0;
 
