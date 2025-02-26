@@ -1,0 +1,45 @@
+class MyQueue
+{
+    QueueNode front, rear;
+    int value = 0;
+    
+    // Function to push an element into the queue.
+    void push(int a)
+    {
+        // Create a new node with the given value
+        QueueNode temp = new QueueNode(a);
+        
+        // If the queue is empty, both front and rear should point to the new node
+        if (rear == null) {
+            front = rear = temp;
+        } else {
+            // If the queue is not empty, link the current rear node to the new node
+            rear.next = temp;
+            rear = temp; // Update the rear to the new node
+        }
+        value += 1;
+    }
+    
+    // Function to pop the front element from the queue.
+    int pop()
+    {
+        // If the queue is empty, return -1
+        if (front == null) return -1;
+        
+        // Get the value of the front node
+        QueueNode temp = front;
+        
+        // Move the front pointer to the next node
+        front = front.next;
+        
+        // If the front becomes null, it means the queue is empty, so set rear to null as well
+        if (front == null) {
+            rear = null;
+        }
+        
+        value -= 1;
+        
+        // Return the popped value
+        return temp.data;
+    }
+}
