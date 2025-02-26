@@ -1,3 +1,4 @@
+//https://www.geeksforgeeks.org/problems/implement-queue-using-linked-list/1?utm_source=youtube
 class MyQueue
 {
     QueueNode front, rear;
