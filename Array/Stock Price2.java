@@ -1,11 +1,13 @@
+//https://www.geeksforgeeks.org/batch/gfg-160-problems/track/arrays-gfg-160/problem/buy-stock-2
 class Solution {
     public int maximumProfit(int prices[]) {
-        if(prices.length <= 1) return 0;
-        int maxProfit = 0, minPrice = prices[0];
+        // Code here
+        int profit = 0, maxProfit = 0, minProfit = prices[0];
+        
         for(int i = 1; i < prices.length; i++){
-            int profit = prices[i] - minPrice;
-            maxProfit = Math.max(maxProfit, profit);
-            minPrice = Math.min(minPrice, prices[i]);
+            minProfit = Math.min(prices[i], minProfit);
+            int current_profit = prices[i] - minProfit;
+            maxProfit = Math.max(maxProfit, current_profit);
         }
         return maxProfit;
     }
