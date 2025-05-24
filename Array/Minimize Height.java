@@ -1,24 +1,22 @@
-import java.util.Arrays;
-
+//https://www.geeksforgeeks.org/batch/gfg-160-problems/track/arrays-gfg-160/problem/minimize-the-heights3351
 class Solution {
     int getMinDiff(int[] arr, int k) {
         int n = arr.length;
-        if (n == 1) return 0; // Only one tower, no difference
+        // code here
+        if(n == 1) return 0;
+        Arrays.sort(arr);
+        int ans = arr[n-1] - arr[0];
         
-        Arrays.sort(arr); // Sort the array
+        int smallest = arr[0] + k;
+        int largest = arr[n-1] - k;
         
-        int minDiff = arr[n - 1] - arr[0]; // Initial max difference
-        
-        for (int i = 1; i < n; i++) {
-            if (arr[i] - k < 0) continue; // Skip if decreasing makes height negative
+        for(int i= 0; i < n-1; i++){
+            int min = Math.min(smallest, arr[i+1] - k);
+            int max = Math.max(largest, arr[i] +k);
             
-            int minHeight = Math.min(arr[0] + k, arr[i] - k);
-            int maxHeight = Math.max(arr[n - 1] - k, arr[i - 1] + k);
-            
-            minDiff = Math.min(minDiff, maxHeight - minHeight);
+            if(min < 0) continue;
+            ans = Math.min(ans, max-min);
         }
-        
-        return minDiff;
+        return ans;
     }
 }
-
