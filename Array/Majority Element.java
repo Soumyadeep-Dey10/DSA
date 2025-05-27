@@ -15,5 +15,19 @@ class Solution {
         }
         return list;
     }
-    
+    public int majorityElement(int[] nums) {
+        //Moores voting algorithm
+        int freq = 0, ans = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(freq == 0){
+                ans =  nums[i];
+            }
+            if(ans == nums[i]){
+                freq += 1;
+            } else{
+                freq -= 1;
+            }
+        }
+        return ans;
+    }
 }
