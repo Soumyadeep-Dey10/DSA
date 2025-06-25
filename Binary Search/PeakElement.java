@@ -1,15 +1,29 @@
 //https://www.geeksforgeeks.org/batch/gfg-160-problems/track/searching-gfg-160/problem/peak-element
 class Solution {
-
-    public int peakElement(int[] arr) {
-        int n = arr.length;
-        if(n == 1) return 0;
-        if(arr[0] >= arr[1]) return 0;
-        
-        if(arr[n-1] >= arr[n-2]) return n-1;
-        // code here
-        for(int i = 1; i < arr.length-1; i++){
-            if(arr[i] >= arr[i-1] && arr[i] >= arr[i+1]) return i;
+    public int findPeakElement(int[] nums) {
+        if(nums.length == 1) return 0;
+        int low = 0, high = nums.length - 1;
+        while(low <= high){
+            int mid = low + (high - low) / 2;
+            if(mid > 0 && mid < nums.length - 1){
+                if(nums[mid] > nums[mid - 1] && nums[mid] > nums[mid+1]){
+                    //peak index
+                    return mid;
+                }
+                else if(nums[mid - 1] > nums[mid]) high = mid - 1;
+                else low = mid+1;
+            }
+                //for edge cases
+            else if(mid == 0){
+                if(nums[0] > nums[1]) return 0;
+                else return 1;
+            }else if(mid == nums.length - 1){
+                if(nums[nums.length - 1] > nums[nums.length - 2]){
+                    return nums.length - 1;
+                }else{
+                    return nums.length - 2;
+                }
+            }
         }
         return -1;
     }
