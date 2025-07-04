@@ -1,38 +1,47 @@
+//https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1
 class Solution {
-    static boolean check(int[] arr, int k, int pageLimit){
-        int count = 1;
-        int pageSum = 0;
-        for(int i = 0; i < arr.length; i++)
-        {
-            if(pageSum + arr[i] > pageLimit)
-                {
-                    count++;
-                    pageSum = arr[i];
-                }
-            else{
-            pageSum += arr[i];
+    public static boolean isValid(int[] arr, int m, int maxAllowedPages){
+        int n = arr.length;
+        if(n < m) return false;  // If books are fewer than students, impossible
+        
+        int sum = 0, student = 1;
+        
+        for(int i = 0; i < n; i++){
+            if(arr[i] > maxAllowedPages){
+                return false;
             }
-        }    
-        return (count <= k);
-    }
-    public static int findPages(int[] arr, int k) {
-        // code here
-        if(k > arr.length) return -1;
-        
-        int low = Arrays.stream(arr).max().getAsInt();
-        int high = Arrays.stream(arr).sum();
-        int res = -1;
-        
-        while(low <= high){
-            int mid = low + (high - low) / 2;
-            
-            if(check(arr,  k, mid)){
-                res = mid;
-                high = mid - 1;
-            }else{
-                low = mid+1;
+            if(sum + arr[i] <= maxAllowedPages){
+                sum += arr[i];
+            } else {
+                sum = arr[i];
+                student++;
             }
         }
-        return res;
+        return student <= m;
+    }
+    
+    public static int findPages(int[] arr, int m) {
+        int sum = 0, max = Integer.MIN_VALUE;
+        
+        for(int val : arr){
+            max = Math.max(val, max);  
+            sum += val;
+        }
+        
+        int low = max, high = sum;
+        int ans = -1;
+        
+        while(low <= high){
+            int mid = low + (high - low)/2;
+            
+            if(isValid(arr, m, mid)){
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        
+        return ans;
     }
 }
