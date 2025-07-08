@@ -2,21 +2,25 @@
 class LongestSubarrayWithSumK {
     public static int longestSubarray(int[] arr, int k) {
          
-         int sum = 0, ans = Integer.MIN_VALUE;
-         int i = 0, j = 0;
-         while(j < arr.length){
-             sum += arr[j];
-             if(sum == k) {
-                 ans = Math.max(ans, (j-i+1));
-             }
-             else if(sum > k){
-                     sum -= arr[i];
-                     i++;
-                 
-             }
-            j++;
-         }
-         return ans;
+          int i = 0, j = 0;
+        int sum = 0, max = Integer.MIN_VALUE;
+        
+        while(j < arr.length){
+            sum += arr[j];
+            
+            if(sum < k) j++;
+            else if(sum == k){
+                max = Math.max(max, j - i + 1);
+                j++;
+            }else if(sum > k){
+                while(sum > k){
+                    sum -= arr[i];
+                    i++;
+                }
+                j++;
+            }
+        }
+        return max;
             
     }
 	public static void main(String[] args){
