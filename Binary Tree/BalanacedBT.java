@@ -1,0 +1,19 @@
+//https://leetcode.com/problems/balanced-binary-tree/
+class Solution {
+
+    public boolean isBalanced(TreeNode root) {
+        return maxDepth(root) != -1;
+    }
+
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        int lh = maxDepth(root.left);
+        if(lh == -1) return -1;
+
+        int rh = maxDepth(root.right);
+        if(rh == -1) return -1;
+
+        if(Math.abs(lh - rh) > 1) return -1;
+        return 1 + Math.max(lh, rh);
+    }
+}
