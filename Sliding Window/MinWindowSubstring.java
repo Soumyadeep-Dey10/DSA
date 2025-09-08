@@ -1,50 +1,98 @@
 //https://leetcode.com/problems/minimum-window-substring/
-class MinWindowSubstring {
+// class MinWindowSubstring {
+//     public String minWindow(String s, String t) {
+//         int m = s.length();
+//         int n = t.length();
+
+//         if (m < n) return ""; // If s is smaller than t, no valid window exists
+
+//         // Frequency array for characters in t
+//         int[] hashArr = new int[128]; // Use 128 since characters can be lowercase and uppercase
+//         for (int i = 0; i < n; i++) {
+//             hashArr[t.charAt(i)]++;
+//         }
+
+//         int l = 0, r = 0;
+//         int ct = 0; // Count of matching characters
+//         int minLen = Integer.MAX_VALUE; // Initialize minLen to a large value
+//         int sIndex = -1;
+
+//         while (r < m) {
+//             // Expand window by moving r
+//             char rightChar = s.charAt(r);
+//             if (hashArr[rightChar] > 0) {
+//                 ct++;
+//             }
+//             hashArr[rightChar]--; // Decrease the count for the current character
+
+//             // When we have a valid window, try to minimize it
+//             while (ct == n) {
+//                 if (r - l + 1 < minLen) {
+//                     minLen = r - l + 1;
+//                     sIndex = l;
+//                 }
+
+//                 // Contract the window by moving l
+//                 char leftChar = s.charAt(l);
+//                 hashArr[leftChar]++; // Increase the count back when moving left
+//                 if (hashArr[leftChar] > 0) {
+//                     ct--; // Decrease the match count if a necessary character is lost
+//                 }
+//                 l++;
+//             }
+
+//             r++;
+//         }
+
+//         // Return the smallest window or an empty string if no window was found
+//         return sIndex == -1 ? "" : s.substring(sIndex, sIndex + minLen);
+//     }
+
+// }
+
+class Solution {
     public String minWindow(String s, String t) {
-        int m = s.length();
-        int n = t.length();
+        if (s.length() < t.length()) return "";
 
-        if (m < n) return ""; // If s is smaller than t, no valid window exists
-
-        // Frequency array for characters in t
-        int[] hashArr = new int[128]; // Use 128 since characters can be lowercase and uppercase
-        for (int i = 0; i < n; i++) {
-            hashArr[t.charAt(i)]++;
+        // build frequency map of characters in t
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char ch : t.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
 
         int l = 0, r = 0;
-        int ct = 0; // Count of matching characters
-        int minLen = Integer.MAX_VALUE; // Initialize minLen to a large value
-        int sIndex = -1;
+        int count = 0;
+        int sIndex = 0, minLen = Integer.MAX_VALUE;
 
-        while (r < m) {
-            // Expand window by moving r
+        while (r < s.length()) {
             char rightChar = s.charAt(r);
-            if (hashArr[rightChar] > 0) {
-                ct++;
-            }
-            hashArr[rightChar]--; // Decrease the count for the current character
 
-            // When we have a valid window, try to minimize it
-            while (ct == n) {
+            // if char already present in map
+            if (map.containsKey(rightChar)) {
+                // decreasing the value in the map
+                map.put(rightChar, map.get(rightChar) - 1);
+                if (map.get(rightChar) >= 0) count += 1;
+            }
+
+            // shrink the window
+            while (count == t.length()) {
                 if (r - l + 1 < minLen) {
                     minLen = r - l + 1;
                     sIndex = l;
                 }
 
-                // Contract the window by moving l
                 char leftChar = s.charAt(l);
-                hashArr[leftChar]++; // Increase the count back when moving left
-                if (hashArr[leftChar] > 0) {
-                    ct--; // Decrease the match count if a necessary character is lost
+                if (map.containsKey(leftChar)) {
+                    // incrementing the value back in the map
+                    map.put(leftChar, map.get(leftChar) + 1);
+                    if (map.get(leftChar) > 0) count -= 1;
                 }
+
                 l++;
             }
-
             r++;
         }
 
-        // Return the smallest window or an empty string if no window was found
-        return sIndex == -1 ? "" : s.substring(sIndex, sIndex + minLen);
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(sIndex, sIndex + minLen);
     }
 }
