@@ -1,36 +1,18 @@
 class Solution {
-    public int maxSubArray(int[] nums) {
-        int bestending = nums[0];
-        int ans = nums[0];
-
-        for(int i = 1; i < nums.length; i++){
-            int v1 = bestending + nums[i];
-            int v2 = nums[i];
-
-            bestending = Math.max(v1, v2);
-
-            ans = Math.max(bestending, ans);
-        }
-        return ans;
-    }
-    public int smallestSumSubarray(int nums[]) {
-        
-        int bestending = nums[0];
-        int ans = nums[0];
-
-        for(int i = 1; i < nums.length; i++){
-            int v1 = bestending + nums[i];
-            int v2 = nums[i];
-
-            bestending = Math.min(v1, v2);
-
-            ans = Math.min(bestending, ans);
-        }
-        return ans;
-    }
-
     public int maxAbsoluteSum(int[] nums) {
-        return Math.max(maxSubArray(nums),Math.abs(smallestSumSubarray(nums)));
+        int maxEnd = 0, maxSum = Integer.MIN_VALUE;
+        int minEnd = 0, minSum = Integer.MAX_VALUE;
+
+    for (int x : nums) {
+        maxEnd = Math.max(x, maxEnd + x);
+        maxSum = Math.max(maxSum, maxEnd);
+
+        minEnd = Math.min(x, minEnd + x);
+        minSum = Math.min(minSum, minEnd);
+    }
+
+    return Math.max(Math.abs(maxSum), Math.abs(minSum));
+
     }
 
 }
