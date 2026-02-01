@@ -1,38 +1,26 @@
 //https://leetcode.com/problems/backspace-string-compare/?envType=problem-list-v2&envId=stack
 class Solution {
-    public boolean backspaceCompare(String s, String t) {
+
+    private String build(String str) {
         Stack<Character> st = new Stack<>();
 
-        // process s
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '#') {
+        for (char ch : str.toCharArray()) {
+            if (ch == '#') {
                 if (!st.isEmpty()) st.pop();
             } else {
-                st.push(s.charAt(i));
+                st.push(ch);
             }
         }
 
-        String str1 = "";
+        StringBuilder sb = new StringBuilder();
         while (!st.isEmpty()) {
-            str1 += st.pop();
+            sb.append(st.pop());
         }
 
-        st.clear(); // IMPORTANT
+        return sb.toString();
+    }
 
-        // process t
-        for (int i = 0; i < t.length(); i++) {
-            if (t.charAt(i) == '#') {
-                if (!st.isEmpty()) st.pop();
-            } else {
-                st.push(t.charAt(i));
-            }
-        }
-
-        String str2 = "";
-        while (!st.isEmpty()) {
-            str2 += st.pop();
-        }
-
-        return str1.equals(str2);
+    public boolean backspaceCompare(String s, String t) {
+        return build(s).equals(build(t));
     }
 }
